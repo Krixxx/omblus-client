@@ -1,34 +1,54 @@
-import React, { useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
-import { useSelector, useDispatch } from "react-redux"
-import { Navigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 import axios from "axios"
+import { setUser } from "../app/slices/authSlice"
+
+const initialState = {
+  username: "",
+  password: "",
+}
 
 const Home = () => {
-  const [values, setValues] = useState({
-    username: "",
-    password: "",
-  })
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const user = useSelector((state) => state.auth.user)
+
+  const [values, setValues] = useState(initialState)
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
 
   const login = async (username, password) => {
-    const response = await axios
-      .get(process.env.REACT_APP_API_URL + `/users/${username}`)
-      .catch((e) => setError("Sellist kasutajat pole"))
+    const response = await axios.get(
+      process.env.REACT_APP_API_URL + `/users/${username}`
+    )
 
     if (response) {
+      //very simple password check
       if (response.data.password === password) {
-        //TODO - if password is OK, then check for role and Navigate to proper page
-        //Also, set logged in user to Redux.
+        const { username, role } = response.data
+        //set user data to redux state
+        dispatch(setUser({ username, role }))
       } else {
         setError("Parool on vale")
       }
     }
   }
 
+  useEffect(() => {
+    if (user) {
+      if (user.role === "admin") {
+        navigate("/dashboard")
+      } else if (user.role === "worker") {
+        navigate("/worker")
+      }
+      //cleanup function
+      return () => {}
+    }
+  }, [user, navigate])
+
   const handleChange = (e) => {
-    e.preventDefault()
     setValues({ ...values, [e.target.name]: e.target.value })
   }
 
@@ -36,15 +56,15 @@ const Home = () => {
     e.preventDefault()
     setError("")
     setLoading(true)
+    try {
+      await login(values.username, values.password)
+      setValues({ username: "", password: "" })
+      setLoading(false)
+    } catch (error) {
+      setError("Sellist kasutajat pole")
+    }
 
-    await login(values.username, values.password)
     setLoading(false)
-    // try {
-    //   //do some magic code
-    // } catch (error) {
-    //   setError("Ei saanud sisse logida")
-    //   setLoading(false)
-    // }
   }
 
   return (
@@ -58,6 +78,7 @@ const Home = () => {
             type="text"
             name="username"
             required
+            value={values.username}
             onChange={handleChange}
             id="username"
           />
@@ -66,6 +87,7 @@ const Home = () => {
             type="password"
             name="password"
             required
+            value={values.password}
             onChange={handleChange}
             id="password"
           />
