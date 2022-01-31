@@ -28,6 +28,7 @@ const Home = () => {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
 
+  //this boolean is for "Log In" button. If no values are entered or we are loading, then button is disabled.
   const isDisabled = loading || !values.username || !values.password
 
   const login = async (username, password) => {
