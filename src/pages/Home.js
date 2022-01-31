@@ -19,6 +19,8 @@ const Home = () => {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
 
+  const isDisabled = loading || !values.username || !values.password
+
   const login = async (username, password) => {
     const response = await axios.get(
       process.env.REACT_APP_API_URL + `/users/${username}`
@@ -62,6 +64,7 @@ const Home = () => {
       setLoading(false)
     } catch (error) {
       setError("Sellist kasutajat pole")
+      setLoading(false)
     }
 
     setLoading(false)
@@ -91,7 +94,7 @@ const Home = () => {
             onChange={handleChange}
             id="password"
           />
-          <button disabled={loading} type="submit">
+          <button disabled={isDisabled} type="submit">
             Logi Sisse
           </button>
         </form>
@@ -147,6 +150,11 @@ const Wrapper = styled.div`
     color: #fff;
     background-color: #0d6efd;
     border-color: #0d6efd;
+  }
+  button:disabled {
+    background-color: lightgray;
+    border-color: lightgray;
+    cursor: not-allowed;
   }
   .version {
     position: absolute;
