@@ -5,6 +5,15 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { setUser } from "../app/slices/authSlice"
 
+//MUI
+import Container from "@mui/material/Container"
+import Paper from "@mui/material/Paper"
+import Typography from "@mui/material/Typography"
+import Alert from "@mui/material/Alert"
+import TextField from "@mui/material/TextField"
+import Button from "@mui/material/Button"
+import Grow from "@mui/material/Grow"
+
 const initialState = {
   username: "",
   password: "",
@@ -71,36 +80,59 @@ const Home = () => {
   }
 
   return (
-    <Wrapper>
-      <div className="card">
-        <h2>Logi sisse</h2>
-        {error && <p className="error">{error}</p>}
-        <form className="signup-form" onSubmit={handleSubmit}>
-          <label htmlFor="username">Kasutaja</label>
-          <input
-            type="text"
-            name="username"
-            required
-            value={values.username}
-            onChange={handleChange}
-            id="username"
-          />
-          <label htmlFor="password">Parool</label>
-          <input
-            type="password"
-            name="password"
-            required
-            value={values.password}
-            onChange={handleChange}
-            id="password"
-          />
-          <button disabled={isDisabled} type="submit">
-            Logi Sisse
-          </button>
-        </form>
-      </div>
-      <p className="version">V1.3</p>
-    </Wrapper>
+    <Grow in>
+      <Container component="main">
+        <Wrapper>
+          <Paper className="paper" elevation={3}>
+            <Typography variant="h4" className="title" align="center">
+              Logi Sisse
+            </Typography>
+            {error && (
+              <Grow
+                in={error}
+                style={{ transformOrigin: "0 50 0" }}
+                {...(error ? { timeout: 1000 } : {})}
+              >
+                <Alert className="alert" severity="error">
+                  {error}
+                </Alert>
+              </Grow>
+            )}
+            <form onSubmit={handleSubmit} className="login-form">
+              <TextField
+                id="username"
+                name="username"
+                type="text"
+                label="Kasutaja"
+                variant="outlined"
+                required
+                value={values.username}
+                onChange={handleChange}
+              />
+              <TextField
+                id="password"
+                name="password"
+                type="password"
+                label="Parool"
+                variant="outlined"
+                required
+                value={values.password}
+                onChange={handleChange}
+              />
+              <Button
+                variant="contained"
+                disabled={isDisabled}
+                type="submit"
+                onClick={handleSubmit}
+              >
+                Logi Sisse
+              </Button>
+            </form>
+          </Paper>
+          <Typography className="version">V2.0</Typography>
+        </Wrapper>
+      </Container>
+    </Grow>
   )
 }
 
@@ -108,53 +140,22 @@ const Wrapper = styled.div`
   height: 100vh;
   display: flex;
   align-items: center;
-  h2 {
-    text-align: center;
-    margin-bottom: 2rem;
+  .title {
+    margin-bottom: 1.5rem;
   }
-  label {
-    font-size: 1.5rem;
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-  }
-  .card {
-    margin: 0 auto;
+  .paper {
     padding: 1rem;
-    border: 1px solid #ced4da;
-    border-radius: 0.5rem;
     max-width: 400px;
-    background: #fff;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-  }
-  input {
-    line-height: 1.5;
-    border: 1px solid #ced4da;
-    font-size: 1rem;
-    font-weight: 400;
-    border-radius: 0.5rem;
-    padding: 0.375rem 0.75rem;
-  }
-  button {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    padding: 0.375rem 0.75rem;
-    font-weight: 400;
-    line-height: 1.5;
     text-align: center;
-    text-decoration: none;
-    vertical-align: middle;
-    border: 1px solid transparent;
-    font-size: 1rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    color: #fff;
-    background-color: #0d6efd;
-    border-color: #0d6efd;
+    margin: 0 auto;
   }
-  button:disabled {
-    background-color: lightgray;
-    border-color: lightgray;
-    cursor: not-allowed;
+  .alert {
+    margin: 1rem auto;
+  }
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
   .version {
     position: absolute;
@@ -162,33 +163,5 @@ const Wrapper = styled.div`
     bottom: 0;
     margin: 0.5rem;
   }
-  .signup-form {
-    display: grid;
-  }
-  .have-account {
-    text-align: center;
-  }
-  .error {
-    color: #842029;
-    background-color: #f8d7da;
-    border-color: #f5c2c7;
-    position: relative;
-    padding: 1rem 1rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    border: 1px solid transparent;
-    border-radius: 0.25rem;
-  }
-  .demo-info {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-bottom: 0%.5;
-    & p {
-      margin: 0;
-    }
-  }
 `
-
 export default Home
