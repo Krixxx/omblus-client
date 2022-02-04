@@ -31,23 +31,6 @@ const Home = () => {
   //this boolean is for "Log In" button. If no values are entered or we are loading, then button is disabled.
   const isDisabled = loading || !values.username || !values.password
 
-  const login = async (username, password) => {
-    const response = await axios.get(
-      process.env.REACT_APP_API_URL + `/users/${username}`
-    )
-
-    if (response) {
-      //very simple password check
-      if (response.data.password === password) {
-        const { username, role } = response.data
-        //set user data to redux state
-        dispatch(setUser({ username, role }))
-      } else {
-        setError("Parool on vale")
-      }
-    }
-  }
-
   useEffect(() => {
     if (user) {
       if (user.role === "admin") {
@@ -74,10 +57,28 @@ const Home = () => {
       setLoading(false)
     } catch (error) {
       setError("Sellist kasutajat pole")
+      setValues({ username: "", password: "" })
       setLoading(false)
     }
 
     setLoading(false)
+  }
+
+  const login = async (username, password) => {
+    const response = await axios.get(
+      process.env.REACT_APP_API_URL + `/users/${username}`
+    )
+
+    if (response) {
+      //very simple password check
+      if (response.data.password === password) {
+        const { username, role } = response.data
+        //set user data to redux state
+        dispatch(setUser({ username, role }))
+      } else {
+        setError("Parool on vale")
+      }
+    }
   }
 
   return (

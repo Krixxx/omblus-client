@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 import { useSelector } from "react-redux"
 import { Navigate } from "react-router-dom"
-import LogoutButton from "../components/LogoutButton"
+import { LogoutButton } from "../components"
 
 const Dashboard = () => {
   const user = useSelector((state) => state.auth.user)

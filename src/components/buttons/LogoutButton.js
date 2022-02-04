@@ -2,7 +2,7 @@ import React from "react"
 
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { logOut } from "../app/slices/authSlice"
+import { logOut } from "../../app/slices/authSlice"
 
 import Button from "@mui/material/Button"
 
