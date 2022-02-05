@@ -1,14 +1,11 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 
-import axios from "axios"
-
-const username = localStorage.getItem("omblus_username")
-const role = localStorage.getItem("omblus_role")
+import { getLocalStorage } from "../../utils/helpers"
 
 const initialState = {
   user: {
-    name: username ? username : "",
-    role: role ? role : "",
+    name: getLocalStorage("omblus_username", ""),
+    role: getLocalStorage("omblus_role", ""),
   },
 }
 
@@ -32,13 +29,16 @@ const authSlice = createSlice({
 })
 
 const addUserToLocalStorage = ({ name, role }) => {
-  localStorage.setItem("omblus_username", name)
-  localStorage.setItem("omblus_role", role)
+  localStorage.setItem("omblus_username", JSON.stringify(name))
+  localStorage.setItem("omblus_role", JSON.stringify(role))
 }
 
 const removeUserFromLocalStorage = () => {
   localStorage.removeItem("omblus_username")
   localStorage.removeItem("omblus_role")
+  localStorage.removeItem("working")
+  localStorage.removeItem("alert")
+  localStorage.removeItem("logged")
 }
 
 export const { setUser, logOut } = authSlice.actions

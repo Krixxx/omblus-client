@@ -1,10 +1,12 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 
-import { useSelector } from "react-redux"
-import { Navigate } from "react-router-dom"
+import { logOut } from "../app/slices/authSlice"
+
+import { useDispatch, useSelector } from "react-redux"
+import { Navigate, useNavigate } from "react-router-dom"
 import { LogoutButton, SendAlertButton, AskWorkButton } from "../components"
-import { getLocalStorage } from "../utils/helpers"
+import { checkInternetConnection, getLocalStorage } from "../utils/helpers"
 
 //MUI
 import Grow from "@mui/material/Grow"
@@ -13,22 +15,81 @@ import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 import Alert from "@mui/material/Alert"
 import Stack from "@mui/material/Stack"
+import axios from "axios"
 
 const Worker = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const user = useSelector((state) => state.auth.user)
   const admin = user.role === "admin"
   //local states
   const [error, setError] = useState("")
-  const [isWorking, setIsWorking] = useState(getLocalStorage("working", true))
-  const [isAlert, setIsAlert] = useState(getLocalStorage("alert", true))
-  const [isLoggedIn, setIsLoggedIn] = useState(getLocalStorage("logged", true))
+  const [working, setWorking] = useState(getLocalStorage("working", true))
+  const [alert, setAlert] = useState(getLocalStorage("alert", false))
+  const [logged, setLogged] = useState(getLocalStorage("logged", true))
 
   const handleClick = () => {
-    console.log("CLICK")
+    if (checkInternetConnection()) {
+      setError("")
+      setWorking(!working)
+    } else {
+      setError("Internetiühenduse probleemid!")
+    }
   }
   const handleAlert = () => {
-    console.log("ALERT")
+    if (checkInternetConnection()) {
+      setError("")
+      setAlert(!alert)
+    } else {
+      setError("Internetiühenduse probleemid!")
+    }
   }
+  const handleLogoutFunction = async () => {
+    setLogged(false)
+    setAlert(false)
+    setWorking(true)
+    await setUserToDatabase()
+  }
+  const handleLogout = async () => {
+    if (checkInternetConnection()) {
+      try {
+        setError("")
+        await handleLogoutFunction()
+        dispatch(logOut())
+        navigate("/")
+      } catch (error) {
+        setError("Ei saanud välja logida")
+      }
+    } else {
+      setError("Internetiühenduse probleemid!")
+    }
+  }
+
+  const setCurrentUserStatuses = () => {
+    localStorage.setItem("working", JSON.stringify(working))
+    localStorage.setItem("alert", JSON.stringify(alert))
+    localStorage.setItem("logged", JSON.stringify(logged))
+  }
+
+  const setUserToDatabase = async () => {
+    try {
+      setCurrentUserStatuses()
+
+      await axios.put(process.env.REACT_APP_API_URL + `/workers/${user.name}`, {
+        alert,
+        working,
+        loggedIn: logged,
+      })
+    } catch (error) {
+      console.log("error with updating user in database")
+    }
+  }
+
+  useEffect(() => {
+    setUserToDatabase()
+    // eslint-disable-next-line
+  }, [working, alert, logged])
 
   return (
     <>
@@ -45,7 +106,6 @@ const Worker = () => {
               </Typography>
               {error && <Alert severity="error">{error}</Alert>}
               <Stack
-                direction="row"
                 spacing={2}
                 alignItems="center"
                 mt={2}
@@ -53,20 +113,20 @@ const Worker = () => {
               >
                 <AskWorkButton
                   loading={false}
-                  handleClick={handleClick}
-                  working={isWorking}
+                  handleClick={() => handleClick()}
+                  working={working}
                 />
                 <SendAlertButton
                   loading={false}
-                  handleAlert={handleAlert}
-                  alert={isAlert}
+                  handleAlert={() => handleAlert()}
+                  alert={alert}
                 />
               </Stack>
             </Paper>
           </Wrapper>
         </Container>
       </Grow>
-      <LogoutButton />
+      <LogoutButton handleLogout={handleLogout} />
     </>
   )
 }

@@ -2,8 +2,8 @@
 // this helps only when wifi is turned off.
 // When wifi is connected but router doesn't have internet (or some other problems), it does not recognize network problems.
 export const checkInternetConnection = () => {
-  return navigator.onLine ? true : false;
-};
+  return navigator.onLine ? true : false
+}
 
 /**
  * Helper function to get specified item from local storage and also provide default value. Return boolean.
@@ -13,11 +13,11 @@ export const checkInternetConnection = () => {
  */
 
 export const getLocalStorage = (keyValue, defaultValue) => {
-  let data = localStorage.getItem(keyValue);
+  let data = localStorage.getItem(keyValue)
 
   if (data) {
-    return JSON.parse(localStorage.getItem(keyValue));
+    return JSON.parse(data)
   } else {
-    return defaultValue;
+    return defaultValue
   }
-};
+}

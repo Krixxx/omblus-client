@@ -6,7 +6,7 @@ import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive"
 const SendAlertButton = ({ handleAlert, alert, loading }) => {
   return (
     <ButtonWrapper>
-      <div className="container">
+      <div className="container" onClick={handleAlert}>
         <button
           type="button"
           disabled={loading}
@@ -29,6 +29,7 @@ const ButtonWrapper = styled.div`
   .container {
     display: flex;
     align-items: center;
+    cursor: pointer;
   }
   .bg,
   .alert-btn {
