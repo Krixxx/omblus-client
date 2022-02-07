@@ -8,12 +8,10 @@ const filterSlice = createSlice({
   reducers: {
     setGridView(state, action) {
       state.gridview = true
-      console.log(state.gridview)
       setGridLocalStorage(action.payload)
     },
     setListView(state, action) {
       state.gridview = false
-      console.log(state.gridview)
       setGridLocalStorage(action.payload)
     },
   },
