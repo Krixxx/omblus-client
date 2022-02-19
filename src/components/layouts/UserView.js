@@ -10,15 +10,19 @@ const UserView = () => {
   const usersList = useSelector(selectAllUsers)
   const usersLoadingStatus = useSelector((state) => state.users.status)
 
-  console.log(usersList)
-
   useEffect(() => {
     if (usersLoadingStatus === "idle") {
       dispatch(fetchAllUsers())
     }
   }, [dispatch, usersLoadingStatus])
 
-  return <div>{usersList}</div>
+  return (
+    <div>
+      {usersList.map((user) => {
+        return <p key={user.id}>{user.username}</p>
+      })}
+    </div>
+  )
 }
 
 export default UserView
