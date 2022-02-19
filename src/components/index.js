@@ -10,6 +10,8 @@ import WorkersList from "./WorkersList"
 
 import GridView from "./layouts/GridView"
 import ListView from "./layouts/ListView"
+import GridItem from "./items/GridItem"
+import { ListItem } from "@mui/material"
 
 export {
   LogoutButton,
@@ -20,4 +22,6 @@ export {
   WorkersList,
   GridView,
   ListView,
+  GridItem,
+  ListItem,
 }
