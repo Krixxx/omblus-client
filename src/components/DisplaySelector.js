@@ -77,6 +77,7 @@ const Wrapper = styled.section`
 
   .btn-container {
     display: grid;
+    margin: 0 auto;
     grid-template-columns: 1fr 1fr;
     column-gap: 0.5rem;
     button {
