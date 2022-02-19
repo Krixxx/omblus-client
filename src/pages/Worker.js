@@ -37,6 +37,7 @@ const Worker = () => {
       setError("Internetiühenduse probleemid!")
     }
   }
+
   const handleAlert = () => {
     if (checkInternetConnection()) {
       setError("")
@@ -45,12 +46,14 @@ const Worker = () => {
       setError("Internetiühenduse probleemid!")
     }
   }
+
   const handleLogoutFunction = async () => {
     setLogged(false)
     setAlert(false)
-    setWorking(true)
+    setWorking(false)
     await setUserToDatabase()
   }
+
   const handleLogout = async () => {
     if (checkInternetConnection()) {
       try {
