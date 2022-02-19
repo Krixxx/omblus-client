@@ -1,16 +1,17 @@
 import React from "react"
 import styled from "styled-components"
 
-import { setListView, setGridView } from "../app/slices/filterSlice"
+import { setView } from "../app/slices/filterSlice"
 import { useDispatch, useSelector } from "react-redux"
 
 import GridViewIcon from "@mui/icons-material/GridView"
 import ViewListIcon from "@mui/icons-material/ViewList"
+import PersonIcon from "@mui/icons-material/PersonOutline"
 import { Container, Grow } from "@mui/material"
 
 const DisplaySelector = () => {
   const workersList = useSelector((state) => state.workers.workers)
-  const gridView = useSelector((state) => state.filter.gridview)
+  const view = useSelector((state) => state.filter.view)
   const dispatch = useDispatch()
 
   const activeUsers = workersList.reduce((activeUsers, { loggedIn }) => {
@@ -31,17 +32,24 @@ const DisplaySelector = () => {
           <div className="btn-container">
             <button
               type="button"
-              className={`${gridView ? "active" : null}`}
-              onClick={() => dispatch(setGridView())}
+              className={`${view === "grid" ? "active" : null}`}
+              onClick={() => dispatch(setView("grid"))}
             >
               <GridViewIcon />
             </button>
             <button
               type="button"
-              className={`${!gridView ? "active" : null}`}
-              onClick={() => dispatch(setListView())}
+              className={`${view === "list" ? "active" : null}`}
+              onClick={() => dispatch(setView("list"))}
             >
               <ViewListIcon />
+            </button>
+            <button
+              type="button"
+              className={`${view === "user" ? "active" : null}`}
+              onClick={() => dispatch(setView("user"))}
+            >
+              <PersonIcon />
             </button>
           </div>
         </Wrapper>
@@ -78,7 +86,7 @@ const Wrapper = styled.section`
   .btn-container {
     display: grid;
     margin: 0 auto;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     column-gap: 0.5rem;
     button {
       background: transparent;

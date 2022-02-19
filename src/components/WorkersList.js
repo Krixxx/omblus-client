@@ -15,7 +15,7 @@ const WorkersList = () => {
   const workersList = useSelector(selectAllWorkersList)
   const workersLoadingStatus = useSelector((state) => state.workers.status)
 
-  const gridview = useSelector((state) => state.filter.gridview)
+  const view = useSelector((state) => state.filter.view)
 
   useEffect(() => {
     if (workersLoadingStatus === "idle") {
@@ -33,10 +33,12 @@ const WorkersList = () => {
     )
   }
 
-  if (gridview === false) {
+  if (view === "list") {
     return <ListView workers={workersList} />
-  } else {
+  } else if (view === "grid") {
     return <GridView workers={workersList} />
+  } else {
+    return <h2>Here we will manage app users</h2>
   }
 }
 

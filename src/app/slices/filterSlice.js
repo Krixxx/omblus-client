@@ -1,27 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { getLocalStorage } from "../../utils/helpers"
 
-const initialState = { gridview: getLocalStorage("gridview", true) }
+const initialState = { view: getLocalStorage("view", "grid") }
 
 const filterSlice = createSlice({
   name: "filter",
   initialState,
   reducers: {
-    setGridView(state, action) {
-      state.gridview = true
-      setGridLocalStorage(true)
-    },
-    setListView(state, action) {
-      state.gridview = false
-      setGridLocalStorage(false)
+    setView(state, action) {
+      state.view = action.payload
+
+      setLocalStorage(action.payload)
     },
   },
 })
 
-const setGridLocalStorage = (state) => {
-  localStorage.setItem("gridview", JSON.stringify(state))
+const setLocalStorage = (state) => {
+  localStorage.setItem("view", JSON.stringify(state))
 }
 
-export const { setGridView, setListView } = filterSlice.actions
+export const { setView } = filterSlice.actions
 
 export default filterSlice.reducer
