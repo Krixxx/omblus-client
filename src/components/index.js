@@ -10,6 +10,7 @@ import WorkersList from "./WorkersList"
 
 import GridView from "./layouts/GridView"
 import ListView from "./layouts/ListView"
+import UserView from "./layouts/UserView"
 import GridItem from "./items/GridItem"
 import ListItem from "./items/ListItem"
 
@@ -22,6 +23,7 @@ export {
   WorkersList,
   GridView,
   ListView,
+  UserView,
   GridItem,
   ListItem,
 }
