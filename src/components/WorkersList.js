@@ -7,7 +7,7 @@ import {
   fetchWorkersList,
 } from "../app/slices/workersSlice"
 
-import { GridView, ListView } from "../components"
+import { GridView, ListView, UserView } from "../components"
 
 const WorkersList = () => {
   const dispatch = useDispatch()
@@ -38,7 +38,7 @@ const WorkersList = () => {
   } else if (view === "grid") {
     return <GridView workers={workersList} />
   } else {
-    return <h2>Here we will manage app users</h2>
+    return <UserView />
   }
 }
 
