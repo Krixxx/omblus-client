@@ -2,6 +2,8 @@ import React, { useEffect } from "react"
 
 import { useSelector, useDispatch } from "react-redux"
 
+import { UserItem, AddUserBar } from "../../components"
+
 import { fetchAllUsers, selectAllUsers } from "../../app/slices/usersSlice"
 
 const UserView = () => {
@@ -17,11 +19,14 @@ const UserView = () => {
   }, [dispatch, usersLoadingStatus])
 
   return (
-    <div>
-      {usersList.map((user) => {
-        return <p key={user.id}>{user.username}</p>
-      })}
-    </div>
+    <>
+      <AddUserBar />
+      <div>
+        {usersList.map((user) => {
+          return <UserItem key={user.id} user={user} />
+        })}
+      </div>
+    </>
   )
 }
 
