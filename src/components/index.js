@@ -5,14 +5,17 @@ import AskWorkButton from "./buttons/AskWorkButton"
 import SendAlertButton from "./buttons/SendAlertButton"
 
 import DisplaySelector from "./DisplaySelector"
+import AddUserBar from "./AddUserBar"
 
 import WorkersList from "./WorkersList"
 
 import GridView from "./layouts/GridView"
 import ListView from "./layouts/ListView"
 import UserView from "./layouts/UserView"
+
 import GridItem from "./items/GridItem"
 import ListItem from "./items/ListItem"
+import UserItem from "./items/UserItem"
 
 export {
   LogoutButton,
@@ -20,10 +23,12 @@ export {
   AskWorkButton,
   SendAlertButton,
   DisplaySelector,
+  AddUserBar,
   WorkersList,
   GridView,
   ListView,
   UserView,
   GridItem,
   ListItem,
+  UserItem,
 }
