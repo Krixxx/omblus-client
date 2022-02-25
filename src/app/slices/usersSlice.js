@@ -5,6 +5,8 @@ const initialState = {
   users: [],
   status: "idle",
   error: null,
+  createUserStatus: "idle",
+  createUserError: null,
 }
 
 const usersSlice = createSlice({
@@ -25,7 +27,13 @@ const usersSlice = createSlice({
         state.error = action.error.message
       })
       .addCase(createUser.fulfilled, (state, action) => {
+        state.createUserStatus = "succeeded"
+        state.createUserError = null
         state.users.push(action.payload)
+      })
+      .addCase(createUser.rejected, (state, action) => {
+        state.createUserStatus = "failed"
+        state.createUserError = action.error.message
       })
   },
 })

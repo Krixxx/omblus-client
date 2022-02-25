@@ -9,7 +9,7 @@ import Select from "@mui/material/Select"
 import MenuItem from "@mui/material/MenuItem"
 import Button from "@mui/material/Button"
 
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
 import { createUser } from "../app/slices/usersSlice"
 
@@ -21,6 +21,8 @@ const initialState = {
 
 const AddUserBar = () => {
   const [values, setValues] = useState(initialState)
+
+  const serverError = useSelector((state) => state.users.createUserError)
 
   const dispatch = useDispatch()
 
@@ -89,6 +91,7 @@ const AddUserBar = () => {
           </Grid>
         </Grid>
       </form>
+      {serverError && "viga, palun kontrolli kasutajanime"}
     </Container>
   )
 }
