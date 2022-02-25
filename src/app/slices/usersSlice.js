@@ -24,6 +24,9 @@ const usersSlice = createSlice({
         state.status = "failed"
         state.error = action.error.message
       })
+      .addCase(createUser.fulfilled, (state, action) => {
+        state.users.push(action.payload)
+      })
   },
 })
 
@@ -34,5 +37,17 @@ export const fetchAllUsers = createAsyncThunk("users/fetchUsers", async () => {
 
   return response.data
 })
+
+export const createUser = createAsyncThunk(
+  "users/createUser",
+  async (userData) => {
+    const response = await axios.post(
+      process.env.REACT_APP_API_URL + `/users`,
+      userData
+    )
+
+    return response.data
+  }
+)
 
 export default usersSlice.reducer

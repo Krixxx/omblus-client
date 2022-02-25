@@ -9,6 +9,10 @@ import Select from "@mui/material/Select"
 import MenuItem from "@mui/material/MenuItem"
 import Button from "@mui/material/Button"
 
+import { useDispatch } from "react-redux"
+
+import { createUser } from "../app/slices/usersSlice"
+
 const initialState = {
   username: "",
   password: "",
@@ -18,12 +22,15 @@ const initialState = {
 const AddUserBar = () => {
   const [values, setValues] = useState(initialState)
 
+  const dispatch = useDispatch()
+
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value })
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    dispatch(createUser(values))
     console.log(values)
   }
 
