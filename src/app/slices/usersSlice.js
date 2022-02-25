@@ -35,6 +35,9 @@ const usersSlice = createSlice({
         state.createUserStatus = "failed"
         state.createUserError = action.error.message
       })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.users = state.users.filter((user) => user.id !== action.payload)
+      })
   },
 })
 
@@ -57,5 +60,11 @@ export const createUser = createAsyncThunk(
     return response.data
   }
 )
+
+export const deleteUser = createAsyncThunk("users/deleteUser", async (id) => {
+  await axios.delete(process.env.REACT_APP_API_URL + `/users/${id}`)
+
+  return id
+})
 
 export default usersSlice.reducer
