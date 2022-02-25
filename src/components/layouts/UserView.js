@@ -20,8 +20,6 @@ const UserView = () => {
   const usersList = useSelector(selectAllUsers)
   const usersLoadingStatus = useSelector((state) => state.users.status)
 
-  console.log(usersList)
-
   useEffect(() => {
     if (usersLoadingStatus === "idle") {
       dispatch(fetchAllUsers())
@@ -40,7 +38,7 @@ const UserView = () => {
             <TableHead>
               <TableRow>
                 <TableCell>Kasutaja ID</TableCell>
-                <TableCell align="right">Amet</TableCell>
+                <TableCell align="right">Roll</TableCell>
                 <TableCell align="right"></TableCell>
               </TableRow>
             </TableHead>
