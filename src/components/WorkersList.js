@@ -14,14 +14,15 @@ const WorkersList = () => {
 
   const workersList = useSelector(selectAllWorkersList)
   const workersLoadingStatus = useSelector((state) => state.workers.status)
-
   const view = useSelector((state) => state.filter.view)
+  const users = useSelector((state) => state.users.users)
 
   useEffect(() => {
-    if (workersLoadingStatus === "idle") {
-      dispatch(fetchWorkersList())
-    }
-  }, [dispatch, workersLoadingStatus])
+    // if (workersLoadingStatus === "idle") {
+    console.log("laetud")
+    dispatch(fetchWorkersList())
+    // }
+  }, [dispatch, users])
 
   if (workersLoadingStatus === "loading") {
     return <h3 style={{ paddingTop: "2rem" }}>Laen andmeid..</h3>
