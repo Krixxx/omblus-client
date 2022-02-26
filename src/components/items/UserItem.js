@@ -15,11 +15,7 @@ const UserItem = ({ user }) => {
   const loggedUser = useSelector((state) => state.auth.user)
 
   const handleDelete = (id, username) => {
-    if (loggedUser.name !== username) {
-      dispatch(deleteUser(id))
-    } else {
-      alert("Enda kasutajat ei saa kustutada!")
-    }
+    dispatch(deleteUser(id))
   }
 
   return (
@@ -29,9 +25,11 @@ const UserItem = ({ user }) => {
         {user.role === "admin" ? "Meister" : "Õmbleja"}
       </TableCell>
       <TableCell align="right">
-        <Button onClick={() => handleDelete(user.id, user.username)}>
-          <DeleteIcon />
-        </Button>
+        {loggedUser.name !== user.username && (
+          <Button onClick={() => handleDelete(user.id, user.username)}>
+            <DeleteIcon />
+          </Button>
+        )}
       </TableCell>
     </TableRow>
   )
