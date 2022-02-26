@@ -19,6 +19,7 @@ const workersSlice = createSlice({
       .addCase(fetchWorkersList.fulfilled, (state, action) => {
         state.status = "succeeded"
         //Add fetched information to the workers array
+        state.workers = []
         state.workers = state.workers.concat(action.payload)
       })
       .addCase(fetchWorkersList.rejected, (state, action) => {
