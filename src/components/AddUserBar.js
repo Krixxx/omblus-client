@@ -33,6 +33,7 @@ const AddUserBar = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     dispatch(createUser(values))
+    setValues(initialState)
   }
 
   return (
