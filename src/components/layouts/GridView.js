@@ -7,6 +7,12 @@ import Grid from "@mui/material/Grid"
 import { GridItem } from "../../components"
 
 const GridView = ({ workers }) => {
+  if (workers.length < 1) {
+    return (
+      <h3 style={{ paddingTop: "2rem" }}>Ühtegi töötajat pole sisse loginud</h3>
+    )
+  }
+
   return (
     <Container component="main" maxWidth="xl">
       <Wrapper>

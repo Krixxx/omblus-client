@@ -19,19 +19,12 @@ const WorkersList = () => {
 
   useEffect(() => {
     // if (workersLoadingStatus === "idle") {
-    console.log("laetud")
     dispatch(fetchWorkersList())
     // }
   }, [dispatch, users])
 
   if (workersLoadingStatus === "loading") {
     return <h3 style={{ paddingTop: "2rem" }}>Laen andmeid..</h3>
-  }
-
-  if (workersList.length < 1) {
-    return (
-      <h3 style={{ paddingTop: "2rem" }}>Ühtegi töötajat pole sisse loginud</h3>
-    )
   }
 
   if (view === "list") {

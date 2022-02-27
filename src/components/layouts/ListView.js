@@ -7,6 +7,11 @@ import Stack from "@mui/material/Stack"
 import { ListItem } from "../../components"
 
 const ListView = ({ workers }) => {
+  if (workers.length < 1) {
+    return (
+      <h3 style={{ paddingTop: "2rem" }}>Ühtegi töötajat pole sisse loginud</h3>
+    )
+  }
   return (
     <Container component="main" maxWidth="lg">
       <Wrapper>
