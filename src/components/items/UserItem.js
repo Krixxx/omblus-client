@@ -4,6 +4,7 @@ import DeleteIcon from "@mui/icons-material/Delete"
 import TableRow from "@mui/material/TableRow"
 import TableCell from "@mui/material/TableCell"
 import Button from "@mui/material/Button"
+import Typography from "@mui/material/Typography"
 
 import { useDispatch, useSelector } from "react-redux"
 
@@ -20,9 +21,13 @@ const UserItem = ({ user }) => {
 
   return (
     <TableRow>
-      <TableCell>{user.username}</TableCell>
+      <TableCell>
+        <Typography variant="body1">{user.username}</Typography>
+      </TableCell>
       <TableCell align="right">
-        {user.role === "admin" ? "Meister" : "Õmbleja"}
+        <Typography variant="body1">
+          {user.role === "admin" ? "Meister" : "Õmbleja"}
+        </Typography>
       </TableCell>
       <TableCell align="right">
         {loggedUser.name !== user.username && (

@@ -13,6 +13,7 @@ import TableCell from "@mui/material/TableCell"
 import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
+import Typography from "@mui/material/Typography"
 
 const UserView = () => {
   const dispatch = useDispatch()
@@ -37,8 +38,12 @@ const UserView = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Kasutaja ID</TableCell>
-                <TableCell align="right">Roll</TableCell>
+                <TableCell>
+                  <Typography variant="h6">Kasutaja ID</Typography>
+                </TableCell>
+                <TableCell align="right">
+                  <Typography variant="h6">Roll</Typography>
+                </TableCell>
                 <TableCell align="right"></TableCell>
               </TableRow>
             </TableHead>
